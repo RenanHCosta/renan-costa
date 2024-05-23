@@ -4,30 +4,114 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-primary: #ffffff;
+  --color-black: #000;
+  --color-grey: #272822;
+  --color-pink: #f92672;
+  --color-blue: #28c6e4;
+  --color-green: #6aaf19;
+  --color-orange: #fd971f;
+  --color-white: #fff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-primary: #141414;
   }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: var(--background-primary);
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@property --blur {
+  syntax: "<length>";
+  initial-value: 0px;
+  inherits: true;
+}
+
+@-webkit-keyframes avatar-gradient {
+  0% {
+    --angle: 0deg;
+    --blur: 5px;
+  }
+
+  50% {
+    --blur: 6px;
+  }
+
+  to {
+    --angle: 360deg;
+    --blur: 5px;
+  }
+}
+
+@keyframes avatar-gradient {
+  0% {
+    --angle: 0deg;
+    --blur: 5px;
+  }
+
+  50% {
+    --blur: 6px;
+  }
+
+  to {
+    --angle: 360deg;
+    --blur: 5px;
+  }
+}
+
+.avatar {
+  -webkit-animation: avatar-gradient 2s linear infinite;
+  animation: avatar-gradient 2s linear infinite;
+  background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        from(var(--color-white)),
+        to(var(--color-white))
+      )
+      padding-box,
+    conic-gradient(
+        from var(--angle, 0deg),
+        var(--color-pink),
+        var(--color-blue),
+        var(--color-green),
+        var(--color-orange),
+        var(--color-green),
+        var(--color-blue),
+        var(--color-pink)
+      )
+      border-box;
+  background: linear-gradient(var(--color-white), var(--color-white))
+      padding-box,
+    conic-gradient(
+        from var(--angle, 0deg),
+        var(--color-pink),
+        var(--color-blue),
+        var(--color-green),
+        var(--color-orange),
+        var(--color-green),
+        var(--color-blue),
+        var(--color-pink)
+      )
+      border-box;
+  border: 2px solid transparent;
+  border-radius: 100%;
+  position: relative;
 }
